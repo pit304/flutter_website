@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import './screens/project_list_screen.dart';
+import 'providers/projects.dart';
+
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -11,9 +16,8 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.teal,
         body: SafeArea(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
+              Widget>[
             CircleAvatar(
               radius: 50.0,
               backgroundImage: AssetImage('images/alex.png'),
@@ -48,11 +52,12 @@ class MyApp extends StatelessWidget {
                 margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
                 child: ListTile(
                   leading: Icon(
-                    Icons.phone,
+                    MaterialCommunityIcons.linkedin,
                     color: Colors.teal,
                   ),
-                  title: Text(
-                    '+41 767 948 034',
+                  title: SelectableLinkify(
+                    onOpen: _onOpen,
+                    text: "https://linkedin.com/in/alexandru-petrencu",
                     style: TextStyle(
                       color: Colors.teal.shade900,
                       fontFamily: 'Source Sans Pro',
@@ -61,23 +66,37 @@ class MyApp extends StatelessWidget {
                   ),
                 )),
             Card(
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.email,
-                    color: Colors.teal,
-                  ),
-                  title: Text(
-                    'alex.petrencu@gmail.com',
-                    style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.teal.shade900,
-                        fontFamily: 'Source Sans Pro'),
-                  ),
-                ))
-          ],
-        )),
+              margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+              child: ListTile(
+                leading: Icon(
+                  Icons.email,
+                  color: Colors.teal,
+                ),
+                title: Linkify(
+                  onOpen: _onOpen,
+                  text: 'alex.petrencu@gmail.com',
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.teal.shade900,
+                      fontFamily: 'Source Sans Pro'),
+                ),
+              ),
+            ),
+            ChangeNotifierProvider.value(
+              value: Projects(),
+              child: ProjectListScreen(),
+            )
+          ]),
+        ),
       ),
     );
+  }
+
+  Future<void> _onOpen(LinkableElement link) async {
+    if (await canLaunch(link.url)) {
+      await launch(link.url);
+    } else {
+      throw 'Could not launch $link';
+    }
   }
 }
