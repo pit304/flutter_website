@@ -1,13 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:flutter_website/widgets/size_config.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import './screens/project_list_screen.dart';
-import 'providers/projects.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,56 +10,81 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: CustomScrollView(
-            primary: true,
-            slivers: <Widget>[
-              SliverGrid(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2,
+      title: "Personal Website - Flutter", 
+      home: MainScreen()
+    );
+  }
+}
+
+class MainScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        minimum: EdgeInsets.all(5),
+        child: Center(
+          child: Container(
+            constraints: BoxConstraints(minWidth: 300, maxWidth: 800),
+            //width: SizeConfig.screenWidth * 0.6,
+            child: CustomScrollView(
+              primary: true,
+              slivers: <Widget>[
+                SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                    return new ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Container(
+                        color: _randomColor(index),
+                        height: 200.0,
+                        child: Center(
+                          child: getTopContainerWidget(index),
+                        ),
+                      ),
+                    );
+                  }, childCount: 8),
                 ),
-                delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                  return new Container(
-                    color: _randomColor(index),
-                    height: 200.0,
-                    child: Center(
-                      child: getTopContainerWidget(index),
-                    ),
-                  );
-                }, childCount: 8),
-              ),
-              renderTitle('PROJECTS'),
-              SliverGrid(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2,
+                renderTitle('PROJECTS'),
+                SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                    return new ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Container(
+                          color: _randomColor(index + 8), height: 200.0),
+                    );
+                  }, childCount: 12),
                 ),
-                delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                  return new Container(
-                      color: _randomColor(index + 8), height: 200.0);
-                }, childCount: 12),
-              ),
-              renderTitle('COURSES'),
-              SliverGrid(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 2,
-                  mainAxisSpacing: 2,
+                renderTitle('COURSES'),
+                SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 2,
+                    mainAxisSpacing: 2,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                    return new ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Container(
+                          color: _randomColor(index + 20), height: 200.0),
+                    );
+                  }, childCount: 12),
                 ),
-                delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                  return new Container(
-                      color: _randomColor(index + 20), height: 200.0);
-                }, childCount: 12),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -126,9 +146,13 @@ class MyApp extends StatelessWidget {
         );
       case 5:
         return Container(
-          color: Colors.grey.shade200,
           padding: EdgeInsets.all(10),
-          child: Image.asset('images/alex.png',),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Image.asset(
+              'images/alex.png',
+            ),
+          ),
         );
       case 6:
         return Column(
@@ -167,7 +191,7 @@ class MyApp extends StatelessWidget {
       case 4:
         return Colors.deepOrange;
       case 5:
-        return Colors.grey;
+        return Colors.grey.shade200;
       case 6:
         return Colors.amber;
       case 7:
