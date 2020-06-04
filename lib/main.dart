@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_website/widgets/size_config.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Personal Website - Flutter", 
-      home: MainScreen()
-    );
+    return MaterialApp(title: 'Personal Website - Flutter', home: MainScreen());
   }
 }
 
@@ -42,6 +39,7 @@ class MainScreen extends StatelessWidget {
                     return new ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Container(
+                        padding: EdgeInsets.all(10),
                         color: _randomColor(index),
                         height: 200.0,
                         child: Center(
@@ -91,19 +89,12 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _onOpen(LinkableElement link) async {
-    if (await canLaunch(link.url)) {
-      await launch(link.url);
-    } else {
-      throw 'Could not launch $link';
-    }
-  }
-
   Widget getTopContainerWidget(int index) {
     switch (index) {
       case 1:
-        return Text(
+        return AutoSizeText(
           'Alex Petrencu',
+          maxLines: 2,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'Pacifico',
@@ -113,28 +104,34 @@ class MainScreen extends StatelessWidget {
           ),
         );
       case 3:
-        return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                MaterialCommunityIcons.linkedin,
-                color: Colors.white,
-              ),
-              Linkify(
-                linkStyle: TextStyle(color: Colors.white),
-                onOpen: _onOpen,
-                text: "https://linkedin.com/in/alexandru-petrencu",
-                textAlign: TextAlign.center,
-                style: TextStyle(
+        return new GestureDetector(
+          onTap: () {
+            _onOpen('https://linkedin.com/in/alexandru-petrencu');
+          },
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  MaterialCommunityIcons.linkedin,
                   color: Colors.white,
-                  fontFamily: 'Source Sans Pro',
-                  fontSize: 20.0,
                 ),
-              ),
-            ]);
+                AutoSizeText(
+                  'linkedin.com/in/alexandru-petrencu',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Colors.white,
+                    fontFamily: 'Source Sans Pro',
+                    fontSize: 20,
+                  ),
+                ),
+              ]),
+        );
       case 4:
-        return Text(
+        return AutoSizeText(
           'SOFTWARE ENGINEER',
+          maxLines: 2,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontFamily: 'Source Sans Pro',
@@ -145,36 +142,45 @@ class MainScreen extends StatelessWidget {
           ),
         );
       case 5:
-        return Container(
-          padding: EdgeInsets.all(10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Image.asset(
-              'images/alex.png',
-            ),
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: Image.asset(
+            'images/alex.png',
           ),
         );
       case 6:
-        return Column(
+        return GestureDetector(
+          onTap: () {
+            _onOpen('mailto:alex.petrencu@gmail.com');
+          },
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
                 Icons.email,
                 color: Colors.white,
               ),
-              Linkify(
-                linkStyle: TextStyle(color: Colors.white),
-                onOpen: _onOpen,
-                text: 'alex.petrencu@gmail.com',
+              AutoSizeText(
+                'alex.petrencu@gmail.com',
+                maxLines: 2,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.teal.shade900,
+                    decoration: TextDecoration.underline,
+                    fontSize: 16.0,
+                    color: Colors.white,
                     fontFamily: 'Source Sans Pro'),
               ),
-            ]);
+            ]),);
       default:
         return null;
+    }
+  }
+
+  Future<void> _onOpen(String link) async {
+    if (await canLaunch(link)) {
+      await launch(link);
+    } else {
+      throw 'Could not launch $link';
     }
   }
 
