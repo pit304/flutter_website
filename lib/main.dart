@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_website/widgets/size_config.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+
+import './widgets/project_item.dart';
+import './widgets/header_item.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
+    //SizeConfig().init(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -43,7 +42,7 @@ class MainScreen extends StatelessWidget {
                         color: _randomColor(index),
                         height: 200.0,
                         child: Center(
-                          child: getTopContainerWidget(index),
+                          child: HeaderItem(index),
                         ),
                       ),
                     );
@@ -61,7 +60,12 @@ class MainScreen extends StatelessWidget {
                     return new ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Container(
-                          color: _randomColor(index + 8), height: 200.0),
+                        padding: EdgeInsets.all(10),
+                        color: _randomColor(index + 8),
+                        child: Center(
+                          child: ProjectItem(index),
+                        ),
+                        height: 200.0),
                     );
                   }, childCount: 12),
                 ),
@@ -87,101 +91,6 @@ class MainScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget getTopContainerWidget(int index) {
-    switch (index) {
-      case 1:
-        return AutoSizeText(
-          'Alex Petrencu',
-          maxLines: 2,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'Pacifico',
-            fontSize: 40.0,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        );
-      case 3:
-        return new GestureDetector(
-          onTap: () {
-            _onOpen('https://linkedin.com/in/alexandru-petrencu');
-          },
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  MaterialCommunityIcons.linkedin,
-                  color: Colors.white,
-                ),
-                AutoSizeText(
-                  'linkedin.com/in/alexandru-petrencu',
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.white,
-                    fontFamily: 'Source Sans Pro',
-                    fontSize: 20,
-                  ),
-                ),
-              ]),
-        );
-      case 4:
-        return AutoSizeText(
-          'SOFTWARE ENGINEER',
-          maxLines: 2,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'Source Sans Pro',
-            color: Colors.white,
-            fontSize: 20.0,
-            letterSpacing: 2.5,
-            fontWeight: FontWeight.bold,
-          ),
-        );
-      case 5:
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: Image.asset(
-            'images/alex.png',
-          ),
-        );
-      case 6:
-        return GestureDetector(
-          onTap: () {
-            _onOpen('mailto:alex.petrencu@gmail.com');
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                Icons.email,
-                color: Colors.white,
-              ),
-              AutoSizeText(
-                'alex.petrencu@gmail.com',
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontFamily: 'Source Sans Pro'),
-              ),
-            ]),);
-      default:
-        return null;
-    }
-  }
-
-  Future<void> _onOpen(String link) async {
-    if (await canLaunch(link)) {
-      await launch(link);
-    } else {
-      throw 'Could not launch $link';
-    }
   }
 
   Color _randomColor(int index) {

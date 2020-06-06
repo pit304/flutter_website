@@ -27,7 +27,7 @@ class ProjectListScreen extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: projectData.projects.length,
                   itemBuilder: (ctx, index) =>
-                      ProjectItem(projectData.projects[index]),
+                      ProjectItem(index),
                 ),
               ),
             );
