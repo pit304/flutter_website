@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../tools/links.dart';
 
 class HeaderItem extends StatefulWidget {
   final int index;
@@ -29,29 +31,18 @@ class _HeaderItemState extends State<HeaderItem> {
           ),
         );
       case 3:
-        return new GestureDetector(
+        return GestureDetector(
           onTap: () {
-            _onOpen('https://linkedin.com/in/alexandru-petrencu');
+            onOpen('https://linkedin.com/in/alexandru-petrencu');
           },
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  MaterialCommunityIcons.linkedin,
-                  color: Colors.white,
-                ),
-                AutoSizeText(
-                  'linkedin.com/in/alexandru-petrencu',
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.white,
-                    fontFamily: 'Source Sans Pro',
-                    fontSize: 20,
-                  ),
-                ),
-              ]),
+          child: Tooltip(
+            message: 'linkedin.com/in/alexandru-petrencu',
+            child: Icon(
+              MaterialCommunityIcons.linkedin,
+              color: Colors.white,
+              size: 40,
+            ),
+          ),
         );
       case 4:
         return AutoSizeText(
@@ -70,42 +61,39 @@ class _HeaderItemState extends State<HeaderItem> {
         return ClipRRect(
           borderRadius: BorderRadius.circular(5),
           child: Image.asset(
-            'images/alex.png',
+            'assets/images/alex.png',
           ),
         );
       case 6:
         return GestureDetector(
           onTap: () {
-            _onOpen('mailto:alex.petrencu@gmail.com');
+            onOpen('mailto:alex.petrencu@gmail.com');
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                Icons.email,
+          child: Tooltip(
+            message: "alex.petrencu@gmail.com",
+            child: Icon(
+              Icons.email,
+              color: Colors.white,
+              size: 40,
+            ),
+          ),
+        );
+      case 7:
+        return GestureDetector(
+          onTap: () {
+            onOpen(
+                'https://drive.google.com/file/d/1x4Bd7cjnBhyMcWjPndEGhoqwmpinFW2b/view');
+          },
+          child: Tooltip(
+              message: "Resume",
+              child: SvgPicture.asset(
+                'assets/images/resume.svg',
+                height: 30,
                 color: Colors.white,
-              ),
-              AutoSizeText(
-                'alex.petrencu@gmail.com',
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontSize: 16.0,
-                    color: Colors.white,
-                    fontFamily: 'Source Sans Pro'),
-              ),
-            ]),);
+              )),
+        );
       default:
         return Container();
-    }
-  }
-
-  Future<void> _onOpen(String link) async {
-    if (await canLaunch(link)) {
-      await launch(link);
-    } else {
-      throw 'Could not launch $link';
     }
   }
 }

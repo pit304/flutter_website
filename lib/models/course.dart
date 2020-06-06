@@ -1,23 +1,23 @@
 import './technology.dart';
 
-class Project {
+class Course {
   final int id;
   final String title;
   final String description;
   final bool completed;
   final String url;
-  final String codeUrl;
   final List<Technology> technologies;
+  final String certificateUrl;
   final String completionDate;
 
-  const Project(
+  const Course(
     this.id,
     this.title,
     this.description,
     this.completed,
     this.url,
-    this.codeUrl, 
     this.technologies, {
+    this.certificateUrl,
     this.completionDate,
   });
 }

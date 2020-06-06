@@ -1,3 +1,4 @@
+import '../models/technology.dart';
 import '../models/project.dart';
 
 const PROJECT_DATA = const [

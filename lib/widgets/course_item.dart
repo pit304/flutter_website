@@ -2,20 +2,20 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-import '../data/project_data.dart';
+import '../data/course_data.dart';
 import '../tools/technology_icons.dart';
 import '../tools/links.dart';
 
-class ProjectItem extends StatefulWidget {
+class CourseItem extends StatefulWidget {
   final int index;
 
-  ProjectItem(this.index);
+  CourseItem(this.index);
 
   @override
-  _ProjectItemState createState() => _ProjectItemState();
+  _CourseItemState createState() => _CourseItemState();
 }
 
-class _ProjectItemState extends State<ProjectItem> {
+class _CourseItemState extends State<CourseItem> {
   @override
   Widget build(BuildContext context) {
     int row = widget.index ~/ 4;
@@ -26,10 +26,9 @@ class _ProjectItemState extends State<ProjectItem> {
     } else if (row % 2 == 1 && column % 2 == 1) {
       currentIndex = row * 2 + column ~/ 2 + 1;
     }
-    final project = PROJECT_DATA.firstWhere(
-        (project) => project.id == currentIndex,
+    final course = COURSE_DATA.firstWhere((course) => course.id == currentIndex,
         orElse: () => null);
-    if (project == null) {
+    if (course == null) {
       return Container();
     }
     return Column(children: <Widget>[
@@ -38,10 +37,10 @@ class _ProjectItemState extends State<ProjectItem> {
         child: Center(
           child: GestureDetector(
             onTap: () {
-              onOpen(project.url);
+              onOpen(course.url);
             },
             child: AutoSizeText(
-              project.title,
+              course.title,
               maxLines: 2,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -63,22 +62,23 @@ class _ProjectItemState extends State<ProjectItem> {
           children: [
             GestureDetector(
               onTap: () {
-                onOpen(project.url);
+                onOpen(course.url);
               },
               child: Icon(
                 Icons.web,
                 color: Colors.white,
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                onOpen('https://github.com/' + project.codeUrl);
-              },
-              child: Icon(
-                MaterialCommunityIcons.git,
-                color: Colors.white,
+            if (course.certificateUrl != null)
+              GestureDetector(
+                onTap: () {
+                  onOpen(course.certificateUrl);
+                },
+                child: Icon(
+                  MaterialCommunityIcons.certificate,
+                  color: Colors.white,
+                ),
               ),
-            ),
           ],
         ),
       ),
@@ -86,10 +86,9 @@ class _ProjectItemState extends State<ProjectItem> {
         flex: 2,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: getTechnologyIcons(project.technologies),
+          children: getTechnologyIcons(course.technologies),
         ),
       ),
     ]);
   }
-
 }

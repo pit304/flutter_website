@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import './widgets/project_item.dart';
+import './widgets/course_item.dart';
 import './widgets/header_item.dart';
+import 'tools/size_config.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,15 +17,16 @@ class MyApp extends StatelessWidget {
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //SizeConfig().init(context);
+    SizeConfig().init(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         minimum: EdgeInsets.all(5),
         child: Center(
           child: Container(
-            constraints: BoxConstraints(minWidth: 300, maxWidth: 800),
-            //width: SizeConfig.screenWidth * 0.6,
+            constraints: BoxConstraints(
+                minWidth: 300,
+                maxWidth: SizeConfig.screenHeight < 600 ? 600 : 900),
             child: CustomScrollView(
               primary: true,
               slivers: <Widget>[
@@ -60,12 +63,12 @@ class MainScreen extends StatelessWidget {
                     return new ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Container(
-                        padding: EdgeInsets.all(10),
-                        color: _randomColor(index + 8),
-                        child: Center(
-                          child: ProjectItem(index),
-                        ),
-                        height: 200.0),
+                          padding: EdgeInsets.all(5),
+                          color: _randomColor(index + 8),
+                          child: Center(
+                            child: ProjectItem(index),
+                          ),
+                          height: 200.0),
                     );
                   }, childCount: 12),
                 ),
@@ -81,9 +84,14 @@ class MainScreen extends StatelessWidget {
                     return new ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Container(
-                          color: _randomColor(index + 20), height: 200.0),
+                          padding: EdgeInsets.all(5),
+                          color: _randomColor(index + 20),
+                          child: Center(
+                            child: CourseItem(index),
+                          ),
+                          height: 200.0),
                     );
-                  }, childCount: 12),
+                  }, childCount: 8),
                 ),
               ],
             ),
