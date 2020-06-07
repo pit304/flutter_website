@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import './platform_svg.dart';
 import '../models/technology.dart';
 
 List getTechnologyIcons(List<Technology> technologies) {
@@ -20,18 +20,17 @@ List getTechnologyIcons(List<Technology> technologies) {
       case Technology.Django:
         return Tooltip(
             message: "Django",
-            child: SvgPicture.asset(
+            child: PlatformSvg.asset(
               'assets/images/django.svg',
-              semanticsLabel: 'Django logo',
-              height: 20,
+              height: 24,
+              width: 36
             ));
       case Technology.Python:
         return Tooltip(
             message: "Python",
-            child: SvgPicture.asset(
+            child: PlatformSvg.asset(
               'assets/images/python.svg',
-              semanticsLabel: 'Python logo',
-              height: 20,
+              height: 18,
             ));
       case Technology.Docker:
         return Tooltip(

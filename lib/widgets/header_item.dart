@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../tools/platform_svg.dart';
 import '../tools/links.dart';
 
 class HeaderItem extends StatefulWidget {
@@ -86,7 +86,7 @@ class _HeaderItemState extends State<HeaderItem> {
           },
           child: Tooltip(
               message: "Resume",
-              child: SvgPicture.asset(
+              child: PlatformSvg.asset(
                 'assets/images/resume.svg',
                 height: 30,
                 color: Colors.white,
