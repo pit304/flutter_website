@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-import '../tools/platform_svg.dart';
 import '../tools/links.dart';
 
 class HeaderItem extends StatefulWidget {
@@ -85,12 +84,13 @@ class _HeaderItemState extends State<HeaderItem> {
                 'https://drive.google.com/file/d/1x4Bd7cjnBhyMcWjPndEGhoqwmpinFW2b/view');
           },
           child: Tooltip(
-              message: "Resume",
-              child: PlatformSvg.asset(
-                'assets/images/resume.svg',
-                height: 30,
-                color: Colors.white,
-              )),
+            message: "Resume",
+            child: Icon(
+              MaterialCommunityIcons.file_account,
+              size: 40,
+              color: Colors.white,
+            ),
+          ),
         );
       default:
         return Container();

@@ -28,6 +28,7 @@ class MainScreen extends StatelessWidget {
                 minWidth: 300,
                 maxWidth: SizeConfig.screenHeight < 600 ? 600 : 900),
             child: CustomScrollView(
+              physics: BouncingScrollPhysics(),
               primary: true,
               slivers: <Widget>[
                 SliverGrid(
