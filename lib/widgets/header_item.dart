@@ -66,10 +66,10 @@ class _HeaderItemState extends State<HeaderItem> {
       case 6:
         return GestureDetector(
           onTap: () {
-            onOpen('mailto:alex.petrencu@gmail.com');
+            onOpen('mailto:alex@petrencu.com');
           },
           child: Tooltip(
-            message: "alex.petrencu@gmail.com",
+            message: "alex@petrencu.com",
             child: Icon(
               Icons.email,
               color: Colors.white,
@@ -81,7 +81,7 @@ class _HeaderItemState extends State<HeaderItem> {
         return GestureDetector(
           onTap: () {
             onOpen(
-                'https://drive.google.com/file/d/1x4Bd7cjnBhyMcWjPndEGhoqwmpinFW2b/view');
+                'https://drive.google.com/file/d/1KZGFn2XdFfqZBwFZL925Z62XIiSzp8dV/view');
           },
           child: Tooltip(
             message: "Resume",
